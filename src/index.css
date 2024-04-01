@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Calme Extra';
+        src: url(fonts/calmius-extra-light.otf) format('opentype');
+    }
+}
