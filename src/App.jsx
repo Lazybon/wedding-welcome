@@ -103,6 +103,9 @@ function App() {
           </button>
         </div>
       </section>
+
+
+
       <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
         <div className="flex flex-col w-[600px] mobile:w-[375px] mb-4">
           <div className="text-[33px] font-primary text-center mb-3">
