@@ -7,7 +7,6 @@ const FormRow = ({ control, question, name, values }) => {
   return (
     <div className="flex flex-col pl-2 mb-2 last:mb-0">
       <h2 className="mb-1 text-[18px] font-bold">{question}</h2>
-
       <Controller
         control={control}
         name={name}

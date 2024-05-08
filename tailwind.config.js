@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        mobile: {'max': '450px'}
+        mobile: { max: '450px' },
       },
       container: {
         center: true,

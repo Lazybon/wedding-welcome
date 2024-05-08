@@ -1,8 +1,16 @@
 import Countdown from 'react-countdown'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import queryString from 'query-string'
 import Form from './Form.jsx'
 import Hands from './assets/hands.png'
+import ContentBackGround from './assets/content.png'
+import {
+  Link,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+} from 'react-scroll'
 import { send } from 'emailjs-com'
 
 function convertDaysToWeeksAndDays(totalDays) {
@@ -18,8 +26,30 @@ function App() {
     type: undefined,
     message: '',
   })
+  const [open, setOpen] = useState(false)
+  const containerRef = useRef(null)
 
   const { id } = queryString.parse(window.location.search)
+
+  useEffect(() => {
+    Events.scrollEvent.register('begin', () => {
+      console.log('begin', arguments)
+    })
+
+    Events.scrollEvent.register('end', () => {
+      console.log('end', arguments)
+    })
+
+    scrollSpy.update()
+  }, [])
+
+  const scrollToContainer = () => {
+    setOpen(true)
+    scroll.scrollToElement(containerRef.current, {
+      duration: 500,
+      smooth: true,
+    })
+  }
 
   return (
     <>
@@ -34,7 +64,7 @@ function App() {
             <span className="text-[33px] font-primary tracking-[10px]">
               Кристина
             </span>
-            <span className="text-[20px] font-primary tracking-[4px] mt-2">
+            <span className="text-[23px] font-primary tracking-[4px] mt-2">
               10 августа 2024
             </span>
           </div>
@@ -80,24 +110,25 @@ function App() {
           />
         </section>
         <section
-          className="flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF]"
-          style={{ backgroundImage: 'url(public/content.png)' }}
+          className="flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF] bg-[url('./assets/content.png')]"
         >
-          <div className="flex flex-col items-center bg-[#ffffff] max-w-[550px] p-3">
-            <div className="text-[25px] font-primary text-center mb-3">
-              Дорогой <br /> Гость!
+          <div className="flex flex-col items-center bg-[#ffffff] max-w-[550px] p-3 rounded-[5px] ">
+            <div className="text-[25px] font-primary text-center mb-2">
+              Дорогой, <br /> Гость!
             </div>
             <div className="text-[20px] font-primary text-center">
-              Мы рады сообщить Вам, что 10.08.2024 состоится самое главное
-              торжество в нашей жизни - день нашей свадьбы! Приглашаем Вас
-              разделить с нами радость этого незабываемого дня.
+              Мы рады сообщить Вам, что этим летом состоится самое главное
+              торжество в нашей жизни - день нашей свадьбы! Приглашаем Вас{' '}
+              <b>10.08.2024</b> разделить с нами радость этого
+              незабываемого дня.
             </div>
-            <div className="text-[16px] font-primary text-center mb-3">
-              10.08.2024 в 10:00
-            </div>
-            <img src="https://wdpst.store/images/1/6348b2.jpeg" alt="photo" />
-            <div className="text-[33px] font-primary text-center my-1">
-              Ждем Вас <br /> Ваши Алексей и Кристина
+            <img
+              className="my-3 w-full"
+              src="https://wdpst.store/images/1/6348b2.jpeg"
+              alt="photo"
+            />
+            <div className="text-[33px] font-primary text-center mb-4">
+              Ждем вас! <br /> Ваши, Алексей и Кристина.
             </div>
             <div className="text-[20px] font-primary font-medium text-center">
               Будем благодарны, если при выборе нарядов на наше торжество вы
@@ -110,7 +141,7 @@ function App() {
               <span className="w-[36px] h-[36px] bg-[#cfc0c5] rounded-[50%]" />
               <span className="w-[36px] h-[36px] bg-[#b8999f] rounded-[50%]" />
             </div>
-            <button
+            {/* <button
               className="btn mt-4 mx-2 w-full bg-[#333333] text-white"
               onClick={() =>
                 send(
@@ -124,7 +155,7 @@ function App() {
                   },
                   'sMC48ee0B7lFTIHgO'
                 )
-                  .then((response) => {
+                  .then(() => {
                     setNotice({
                       open: true,
                       type: 'success',
@@ -140,56 +171,69 @@ function App() {
                     console.log('FAILED...', err)
                   })
               }
+            > */}
+            <Link
+              to="container"
+              smooth={true}
+              duration={500}
+              className="w-full mt-4 mx-2"
             >
-              <span className="icon-[fa-solid--check]" />
-              Подтвердить
-            </button>
+              <button
+                className="btn w-full text-white bg-[#333333] flex justify-center"
+                onClick={() => scrollToContainer()}
+              >
+                <span className="icon-[fa-solid--check] mr-0.5" />
+                Подтвердить
+              </button>
+            </Link>
           </div>
         </section>
-        {!window.localStorage.getItem('user-form') && (
-          <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
-            <Form
-              guestName={id}
-              openNoti={setNotice}
-              inputs={[
-                {
-                  name: 'transfer',
-                  question: 'Потребуется ли вам трансфер?',
-                  values: [
-                    'Нет',
-                    'Только до торжества',
-                    'Только после торжества',
-                    'До и после торжества',
-                  ],
-                },
-                {
-                  name: 'food',
-                  question: 'Есть ли у вас особые предпочтения по еде?',
-                  values: ['Нет', 'Не ем мясо', 'Не ем рыбу', 'Вегетарианец'],
-                },
-                {
-                  name: 'alcohol',
-                  question: 'Какой алкоголь вы предпочитаете?',
-                  values: [
-                    'Красное вино',
-                    'Белое вино',
-                    'Шампанское',
-                    'Виски/коньяк',
-                    'Водка',
-                    'Не буду пить алкоголь',
-                  ],
-                },
-                {
-                  name: 'infant',
-                  question: 'Будет ли с вами на празднике ребенок?',
-                  values: ['Да', 'Нет'],
-                },
-              ]}
-            />
-          </section>
-        )}
+        <Element name="container" ref={containerRef}>
+          {!window.localStorage.getItem('user-form') && open && (
+            <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
+              <Form
+                guestName={id}
+                openNoti={setNotice}
+                inputs={[
+                  {
+                    name: 'transfer',
+                    question: 'Потребуется ли вам трансфер?',
+                    values: [
+                      'Нет',
+                      'Только до торжества',
+                      'Только после торжества',
+                      'До и после торжества',
+                    ],
+                  },
+                  {
+                    name: 'food',
+                    question: 'Есть ли у вас особые предпочтения по еде?',
+                    values: ['Нет', 'Не ем мясо', 'Не ем рыбу', 'Вегетарианец'],
+                  },
+                  {
+                    name: 'alcohol',
+                    question: 'Какой алкоголь вы предпочитаете?',
+                    values: [
+                      'Красное вино',
+                      'Белое вино',
+                      'Шампанское',
+                      'Виски/коньяк',
+                      'Водка',
+                      'Не буду пить алкоголь',
+                    ],
+                  },
+                  {
+                    name: 'infant',
+                    question: 'Будет ли с вами на празднике ребенок?',
+                    values: ['Да', 'Нет'],
+                  },
+                ]}
+              />
+            </section>
+          )}
+        </Element>
         <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
-          <div className="flex flex-col w-[600px] mobile:w-[375px] mb-4">
+          <div className="flex flex-col max-w-[550px] mobile:w-[375px] mb-4 bg-[#ffffff] rounded-[5px]">
             <div className="text-[33px] font-primary text-center mb-3">
               Свадебное расписание
             </div>
@@ -214,11 +258,13 @@ function App() {
               </div>
             </div>
           </div>
-          <iframe
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3A14d1bd91007de4ab650b462aed7192d02f193ea34a35275eaad02ce8cdaab1ac&amp;source=constructor"
-            className=" w-full h-[600px] mobile:h-[400px] mobile:w-[400px]"
-            frameBorder="0"
-          ></iframe>
+          <div className="w-[1200px] mobile:w-[375px]">
+            <iframe
+              src="https://yandex.ru/map-widget/v1/?um=constructor%3A14d1bd91007de4ab650b462aed7192d02f193ea34a35275eaad02ce8cdaab1ac&amp;source=constructor"
+              className=" w-full h-[600px] mobile:h-[400px] mobile:w-[400px]"
+              frameBorder="0"
+            ></iframe>
+          </div>
         </section>
       </div>
       <div className="toast toast-end">
