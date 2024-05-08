@@ -25,7 +25,7 @@ function App() {
     <>
       <div className="flex flex-col">
         <section className="container flex flex-col items-center pt-[20px] mx-auto bg-main">
-          <img src="assets/hands.png" alt="hands" className="h-[450px] min-w-[350px]" />
+          <img src={Hands} alt="hands" className="h-[450px] min-w-[350px]" />
           <div className="flex flex-col items-center mt-3">
             <span className="text-[33px] font-primary tracking-[10px]">
               Алексей
