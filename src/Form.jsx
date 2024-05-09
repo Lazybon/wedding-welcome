@@ -1,6 +1,6 @@
-import React from 'react'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useForm, Controller } from 'react-hook-form'
+import queryString from 'query-string'
 import { send } from 'emailjs-com'
 
 const FormRow = ({ control, question, name, values }) => {
@@ -48,13 +48,16 @@ const Form = ({ inputs, openNoti, guestName }) => {
     },
   })
   const log = watch()
+
+  const { id } = queryString.parse(window.location.search)
   const disabledButton = log.transfer && log.food && log.alcohol && log.infant
 
   const onSubmit = (data) => {
     const toSend = {
       from_name: guestName,
       to_name: 'Alexey',
-      message: `Транспорт: ${data.transfer},
+      message: `Имя: ${id},
+                Транспорт: ${data.transfer},
                 Еда: ${data.food},
                 Алкоголь: ${data.alcohol},
                 Ребенок: ${data.infant}`,
@@ -75,7 +78,7 @@ const Form = ({ inputs, openNoti, guestName }) => {
   }
 
   return (
-    <form className="flex flex-col bg-[#ffffff] max-w-[550px] w-full p-2 rounded-[5px]">
+    <form className="flex flex-col bg-[#ffffff] max-w-[550px] w-full p-2 rounded-[5px] ">
       <h1 className="text-[25px] text-center font-bold mb-2">
         Несколько вопросов, о вас, для нас =)
       </h1>

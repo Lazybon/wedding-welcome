@@ -8,13 +8,19 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        mobile: {'max': '450px'}
+        mobile: { max: '450px' },
       },
       container: {
         center: true,
       },
       fontFamily: {
         primary: 'Calme Extra',
+      },
+      keyframes: {
+        show: {
+          '0%': { opacity: 0 },
+          '100%%': { opacity: 1 },
+        },
       },
       spacing: {
         1: '10px',

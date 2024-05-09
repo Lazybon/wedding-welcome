@@ -2,10 +2,7 @@ import Countdown from 'react-countdown'
 import { useState } from 'react'
 import queryString from 'query-string'
 import Form from './Form.jsx'
-import Hands from './assets/hands.png'
-import { send } from 'emailjs-com'
-
-const handsImg = 'https://s580vla.storage.yandex.net/rdisk/cba15e79627c7d653dcf8813dd61970a032e9ec901b917ed89e4a1f2bd94b74e/663cc4f5/B4-Kb2pgds9fu-C-tEsoOU27wInE8AtlDiNhZOoZn51Qu_hGdoGWHlggVMaAmGVEC7LKrAv2KIArekii4hq1Mw==?uid=0&filename=hands.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&fsize=64105&hid=b331d0cea59b5cb4515d015e2cbdd90f&media_type=image&tknv=v2&etag=4dd4b6c3b1456c8b467bd2e0a575a7b6&ts=61804c4536740&s=49c600e58a17420c94dbaba8a9fbfdf61df0bf7701f0e9171605723b306fda8a&pb=U2FsdGVkX18wqTK9LN0f-o_E-aGZx5pqAsNcBXQ5xX3vfSTsyu5j50Lu8pcSXWkzEHGQ1GyAhtgYTezGeD4fn677ArTqCyFxuKjJlRLBM5w'
+import { Hands } from './assets/hands.jsx'
 
 function convertDaysToWeeksAndDays(totalDays) {
   let weeks = Math.floor(totalDays / 7)
@@ -21,13 +18,14 @@ function App() {
     message: '',
   })
 
-  const { id } = queryString.parse(window.location.search)
+  const { id, gen } = queryString.parse(window.location.search)
 
   return (
     <>
       <div className="flex flex-col">
         <section className="container flex flex-col items-center pt-[20px] mx-auto bg-main">
-          <img src={handsImg} alt="hands" className="h-[450px] min-w-[350px]" />
+          {/* <img src={Hands} alt="hands" className="h-[450px] min-w-[350px]" /> */}
+          <Hands />
           <div className="flex flex-col items-center mt-3">
             <span className="text-[33px] font-primary tracking-[10px]">
               Алексей
@@ -82,24 +80,25 @@ function App() {
           />
         </section>
         <section
-          className="flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF]"
-          style={{ backgroundImage: 'url(public/content.png)' }}
+          className={`flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF] bg-[url('./src/assets/content.svg')]`}
         >
           <div className="flex flex-col items-center bg-[#ffffff] max-w-[550px] p-3">
             <div className="text-[25px] font-primary text-center mb-3">
-              Дорогой <br /> Гость!
+              {gen === 'female' ? 'Дорогая,' : 'Дорогой,'}
+              <br />
+              {id ? id.split('-')[0] + '!' : 'Гость!'}
             </div>
             <div className="text-[20px] font-primary text-center">
-              Мы рады сообщить Вам, что 10.08.2024 состоится самое главное
+              Мы рады сообщить Вам, что этим летом состоится самое главное
               торжество в нашей жизни - день нашей свадьбы! Приглашаем Вас
-              разделить с нами радость этого незабываемого дня.
+              <b>10.08.2024</b> разделить с нами радость этого незабываемого
+              дня.
             </div>
-            <div className="text-[16px] font-primary text-center mb-3">
-              10.08.2024 в 10:00
+            <div className="animate-[show_1s_ease-in-out] my-1">
+              <img src="https://wdpst.store/images/1/6348b2.jpeg" alt="photo" />
             </div>
-            <img src="https://wdpst.store/images/1/6348b2.jpeg" alt="photo" />
             <div className="text-[33px] font-primary text-center my-1">
-              Ждем Вас <br /> Ваши Алексей и Кристина
+              Ждем вас! <br /> Ваши, Алексей и Кристина.
             </div>
             <div className="text-[20px] font-primary font-medium text-center">
               Будем благодарны, если при выборе нарядов на наше торжество вы
@@ -112,44 +111,10 @@ function App() {
               <span className="w-[36px] h-[36px] bg-[#cfc0c5] rounded-[50%]" />
               <span className="w-[36px] h-[36px] bg-[#b8999f] rounded-[50%]" />
             </div>
-            <button
-              className="btn mt-4 mx-2 w-full bg-[#333333] text-white"
-              onClick={() =>
-                send(
-                  'service_kgupzdh',
-                  'template_uii74zm',
-                  {
-                    from_name: id,
-                    to_name: 'Alexey',
-                    message: 'Принял ваше приглашение',
-                    reply_to: '',
-                  },
-                  'sMC48ee0B7lFTIHgO'
-                )
-                  .then((response) => {
-                    setNotice({
-                      open: true,
-                      type: 'success',
-                      message: 'Будем с радостью вас ждать! =)',
-                    })
-                    setTimeout(
-                      () =>
-                        setNotice({ open: false, type: 'info', message: '' }),
-                      2000
-                    )
-                  })
-                  .catch((err) => {
-                    console.log('FAILED...', err)
-                  })
-              }
-            >
-              <span className="icon-[fa-solid--check]" />
-              Подтвердить
-            </button>
           </div>
         </section>
         {!window.localStorage.getItem('user-form') && (
-          <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
+          <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF] ">
             <Form
               guestName={id}
               openNoti={setNotice}
@@ -219,7 +184,6 @@ function App() {
           <iframe
             src="https://yandex.ru/map-widget/v1/?um=constructor%3A14d1bd91007de4ab650b462aed7192d02f193ea34a35275eaad02ce8cdaab1ac&amp;source=constructor"
             className=" w-full h-[600px] mobile:h-[400px] mobile:w-[400px]"
-            frameBorder="0"
           ></iframe>
         </section>
       </div>
