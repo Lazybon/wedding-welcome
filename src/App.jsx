@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react'
 import queryString from 'query-string'
 import Form from './Form.jsx'
 import Hands from './assets/hands.png'
-import ContentBackGround from './assets/content.png'
 import {
   Link,
   Element,
@@ -11,7 +10,7 @@ import {
   animateScroll as scroll,
   scrollSpy,
 } from 'react-scroll'
-import { send } from 'emailjs-com'
+
 
 function convertDaysToWeeksAndDays(totalDays) {
   let weeks = Math.floor(totalDays / 7)
@@ -29,7 +28,7 @@ function App() {
   const [open, setOpen] = useState(false)
   const containerRef = useRef(null)
 
-  const { id } = queryString.parse(window.location.search)
+  const { id, gen } = queryString.parse(window.location.search)
 
   useEffect(() => {
     Events.scrollEvent.register('begin', () => {
@@ -109,18 +108,17 @@ function App() {
             }}
           />
         </section>
-        <section
-          className="flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF] bg-[url('./assets/content.png')]"
-        >
+        <section className="flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF] bg-[url('./assets/content.png')]">
           <div className="flex flex-col items-center bg-[#ffffff] max-w-[550px] p-3 rounded-[5px] ">
             <div className="text-[25px] font-primary text-center mb-2">
-              Дорогой, <br /> Гость!
+              {gen === 'female' ? 'Дорогая,' : 'Дорогой,'}
+              <br /> {id.split('_')[0]}!
             </div>
             <div className="text-[20px] font-primary text-center">
               Мы рады сообщить Вам, что этим летом состоится самое главное
               торжество в нашей жизни - день нашей свадьбы! Приглашаем Вас{' '}
-              <b>10.08.2024</b> разделить с нами радость этого
-              незабываемого дня.
+              <b>10.08.2024</b> разделить с нами радость этого незабываемого
+              дня.
             </div>
             <img
               className="my-3 w-full"
@@ -183,14 +181,14 @@ function App() {
                 onClick={() => scrollToContainer()}
               >
                 <span className="icon-[fa-solid--check] mr-0.5" />
-                Подтвердить
+                Небольшой опрос
               </button>
             </Link>
           </div>
         </section>
         <Element name="container" ref={containerRef}>
           {!window.localStorage.getItem('user-form') && open && (
-            <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
+            <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF] bg-[url('./assets/content.png')]">
               <Form
                 guestName={id}
                 openNoti={setNotice}
@@ -233,8 +231,8 @@ function App() {
           )}
         </Element>
         <section className="flex flex-col items-center pb-6 w-full bg-[#EFEFEF]">
-          <div className="flex flex-col max-w-[550px] mobile:w-[375px] mb-4 bg-[#ffffff] rounded-[5px]">
-            <div className="text-[33px] font-primary text-center mb-3">
+          <div className="flex flex-col max-w-[550px] mobile:w-[375px] mb-4 bg-[#ffffff] rounded-[5px] py-2">
+            <div className="text-[33px] font-primary text-center mb-3 font-bold">
               Свадебное расписание
             </div>
             <div className="text-[20px] font-primary text-center mb-2">
@@ -243,22 +241,22 @@ function App() {
             </div>
             <div className="flex items-center justify-around">
               <div className="flex-1 pl-6 text-[20px] font-primary text-left mb-1 mobile:pl-2">
-                10.08.2024 16:15
+                10.08.2024 <b>16:15</b>
               </div>
-              <div className="flex-1 text-[20px] font-primary text-left">
+              <div className="flex-1 text-[20px] font-primary text-left font-bold">
                 Торжественная роспись
               </div>
             </div>
             <div className="flex justify-around items-center mt-1">
               <div className="flex-1 pl-6 text-[20px] font-primary text-left mobile:pl-2">
-                10.08.2024 17:00
+                10.08.2024 <b>17:00</b>
               </div>
-              <div className="flex-1 text-[20px] font-primary text-left">
+              <div className="flex-1 text-[20px] font-primary text-left font-bold">
                 Фуршет
               </div>
             </div>
           </div>
-          <div className="w-[1200px] mobile:w-[375px]">
+          <div className="w-[1200px] mobile:w-[400px]">
             <iframe
               src="https://yandex.ru/map-widget/v1/?um=constructor%3A14d1bd91007de4ab650b462aed7192d02f193ea34a35275eaad02ce8cdaab1ac&amp;source=constructor"
               className=" w-full h-[600px] mobile:h-[400px] mobile:w-[400px]"
