@@ -5,6 +5,8 @@ import Form from './Form.jsx'
 import Hands from './assets/hands.png'
 import { send } from 'emailjs-com'
 
+const handsImg = 'https://s580vla.storage.yandex.net/rdisk/cba15e79627c7d653dcf8813dd61970a032e9ec901b917ed89e4a1f2bd94b74e/663cc4f5/B4-Kb2pgds9fu-C-tEsoOU27wInE8AtlDiNhZOoZn51Qu_hGdoGWHlggVMaAmGVEC7LKrAv2KIArekii4hq1Mw==?uid=0&filename=hands.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&fsize=64105&hid=b331d0cea59b5cb4515d015e2cbdd90f&media_type=image&tknv=v2&etag=4dd4b6c3b1456c8b467bd2e0a575a7b6&ts=61804c4536740&s=49c600e58a17420c94dbaba8a9fbfdf61df0bf7701f0e9171605723b306fda8a&pb=U2FsdGVkX18wqTK9LN0f-o_E-aGZx5pqAsNcBXQ5xX3vfSTsyu5j50Lu8pcSXWkzEHGQ1GyAhtgYTezGeD4fn677ArTqCyFxuKjJlRLBM5w'
+
 function convertDaysToWeeksAndDays(totalDays) {
   let weeks = Math.floor(totalDays / 7)
   let remainingDays = totalDays % 7
@@ -25,7 +27,7 @@ function App() {
     <>
       <div className="flex flex-col">
         <section className="container flex flex-col items-center pt-[20px] mx-auto bg-main">
-          <img src={Hands} alt="hands" className="h-[450px] min-w-[350px]" />
+          <img src={handsImg} alt="hands" className="h-[450px] min-w-[350px]" />
           <div className="flex flex-col items-center mt-3">
             <span className="text-[33px] font-primary tracking-[10px]">
               Алексей
