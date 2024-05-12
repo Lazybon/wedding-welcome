@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <div className="flex flex-col">
-        <section className="container flex flex-col items-center pt-[20px] mx-auto bg-main">
+        <section className="container flex flex-col items-center pt-[20px] mx-auto bg-main animate-fade-in-down">
           <img src={Hands} alt="hands" className="h-[450px] min-w-[350px]" />
           <div className="flex flex-col items-center mt-3">
             <span className="text-[33px] font-primary tracking-[10px]">
@@ -84,9 +84,9 @@ function App() {
         >
           <div className="flex flex-col items-center bg-[#ffffff] max-w-[550px] p-3">
             <div className="text-[25px] font-primary text-center mb-3">
-              {gen === 'female' ? 'Дорогая,' : 'Дорогой,'}
+              Дорогой
               <br />
-              {id ? id.split('-')[0] + '!' : 'Гость!'}
+              Гость!
             </div>
             <div className="text-[20px] font-primary text-center">
               Мы рады сообщить Вам, что <b>10.08.2024</b> состоится самое

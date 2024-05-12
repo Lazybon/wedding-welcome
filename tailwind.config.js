@@ -21,6 +21,16 @@ module.exports = {
           '0%': { opacity: 0 },
           '100%%': { opacity: 1 },
         },
+        'fade-in-down': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-50px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
       },
       spacing: {
         1: '10px',
@@ -29,6 +39,9 @@ module.exports = {
         4: '40px',
         5: '50px',
         6: '60px',
+      },
+      animation: {
+        'fade-in-down': 'fade-in-down 1.5s ease-out',
       },
     },
   },
