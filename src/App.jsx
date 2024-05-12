@@ -2,7 +2,8 @@ import Countdown from 'react-countdown'
 import { useState } from 'react'
 import queryString from 'query-string'
 import Form from './Form.jsx'
-import { Hands } from './assets/hands.jsx'
+import Hands from './hands.png'
+import SecondHands from './hands2.png'
 
 function convertDaysToWeeksAndDays(totalDays) {
   let weeks = Math.floor(totalDays / 7)
@@ -24,8 +25,7 @@ function App() {
     <>
       <div className="flex flex-col">
         <section className="container flex flex-col items-center pt-[20px] mx-auto bg-main">
-          {/* <img src={Hands} alt="hands" className="h-[450px] min-w-[350px]" /> */}
-          <Hands />
+          <img src={Hands} alt="hands" className="h-[450px] min-w-[350px]" />
           <div className="flex flex-col items-center mt-3">
             <span className="text-[33px] font-primary tracking-[10px]">
               Алексей
@@ -80,7 +80,7 @@ function App() {
           />
         </section>
         <section
-          className={`flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF] bg-[url('./src/assets/content.svg')]`}
+          className={`flex flex-col items-center mt-5 py-6 w-full bg-[#EFEFEF] bg-[url('content.png')]`}
         >
           <div className="flex flex-col items-center bg-[#ffffff] max-w-[550px] p-3">
             <div className="text-[25px] font-primary text-center mb-3">
@@ -89,13 +89,12 @@ function App() {
               {id ? id.split('-')[0] + '!' : 'Гость!'}
             </div>
             <div className="text-[20px] font-primary text-center">
-              Мы рады сообщить Вам, что этим летом состоится самое главное
-              торжество в нашей жизни - день нашей свадьбы! Приглашаем Вас
-              <b>10.08.2024</b> разделить с нами радость этого незабываемого
-              дня.
+              Мы рады сообщить Вам, что <b>10.08.2024</b> состоится самое
+              главное торжество в нашей жизни - день нашей свадьбы! <br />
+              Приглашаем Вас разделить с нами радость этого незабываемого дня.
             </div>
             <div className="animate-[show_1s_ease-in-out] my-1">
-              <img src="https://wdpst.store/images/1/6348b2.jpeg" alt="photo" />
+              <img src={SecondHands} alt="photo" className="h-[400px]" />
             </div>
             <div className="text-[33px] font-primary text-center my-1">
               Ждем вас! <br /> Ваши, Алексей и Кристина.
@@ -164,20 +163,29 @@ function App() {
               Приглашаем вас разделить вместе с нами радость создания новой
               семьи.
             </div>
-            <div className="flex items-center justify-around">
+            <p className="text-center">10.08.2024</p>
+            <div className="flex justify-around items-center mt-1">
+              <div className="flex-1 pl-6 text-[20px] font-primary text-left mobile:pl-2">
+                15:30
+              </div>
+              <div className="flex-1 text-[20px] font-primary text-left">
+                Фуршет
+              </div>
+            </div>
+            <div className="flex items-center justify-around mobile:mt-1">
               <div className="flex-1 pl-6 text-[20px] font-primary text-left mb-1 mobile:pl-2">
-                10.08.2024 16:15
+                 16:15
               </div>
               <div className="flex-1 text-[20px] font-primary text-left">
                 Торжественная роспись
               </div>
             </div>
-            <div className="flex justify-around items-center mt-1">
-              <div className="flex-1 pl-6 text-[20px] font-primary text-left mobile:pl-2">
-                10.08.2024 17:00
+            <div className="flex items-center justify-around mobile:mt-1">
+              <div className="flex-1 pl-6 text-[20px] font-primary text-left mb-1 mobile:pl-2">
+                17:00
               </div>
               <div className="flex-1 text-[20px] font-primary text-left">
-                Фуршет
+                Банкет
               </div>
             </div>
           </div>

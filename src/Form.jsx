@@ -6,7 +6,7 @@ import { send } from 'emailjs-com'
 const FormRow = ({ control, question, name, values }) => {
   return (
     <div className="flex flex-col pl-2 mb-2 last:mb-0">
-      <h2 className="mb-1 text-[18px] font-bold">{question}</h2>
+      <h2 className="mb-1 font-primary text-[18px] font-bold">{question}</h2>
 
       <Controller
         control={control}
@@ -26,7 +26,10 @@ const FormRow = ({ control, question, name, values }) => {
                   value={item}
                   checked={value === item}
                 />
-                <label className="label-text ml-2" htmlFor={`radio-${name}`}>
+                <label
+                  className="ml-2 font-primary"
+                  htmlFor={`radio-${name}`}
+                >
                   {item}
                 </label>
               </div>
@@ -79,8 +82,9 @@ const Form = ({ inputs, openNoti, guestName }) => {
 
   return (
     <form className="flex flex-col bg-[#ffffff] max-w-[550px] w-full p-2 rounded-[5px] ">
-      <h1 className="text-[25px] text-center font-bold mb-2">
-        Несколько вопросов, о вас, для нас =)
+      <h1 className="text-[25px] text-center font-bold mb-2 font-primary">
+        Пожалуйста, ответьте на вопросы, которые для вас подготовили Жених и
+        Невеста:
       </h1>
       {inputs.map((item, idx) => (
         <FormRow {...item} key={idx} control={control} />
